@@ -16,7 +16,13 @@ int dcipher_ascii(const int chiper_character, const unsigned key_increment){
         return chiper_character;
     }
     const int norm_character = chiper_character - 33;
-    const int character = ((norm_character - key_increment) % 94) + 33;
+    int character = norm_character - key_increment;
+    character = character % 94;
+
+    if(character < 0){
+        character = 94 + character;
+    }
+    character += 33;
     return character;
 }
 
