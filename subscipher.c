@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int cipher_ascii(const int character, const unsigned key_increment){
+int static cipher_ascii(const int character, const unsigned key_increment){
     if(character < 33 || character > 126){
         return character;
     }
@@ -11,7 +11,7 @@ int cipher_ascii(const int character, const unsigned key_increment){
     return cipher_character;
 }
 
-int dcipher_ascii(const int chiper_character, const unsigned key_increment){
+int static dcipher_ascii(const int chiper_character, const unsigned key_increment){
     if(chiper_character < 33 || chiper_character > 126){
         return chiper_character;
     }
@@ -78,15 +78,11 @@ int subs_cipher_ascii(const char *file_path, const unsigned key, const char *mod
         output_file = fopen("out.txt", "w");
         fputs(output_text, output_file);
         fclose(output_file);
-    } else if(strcmp(mode, "dcipher") == 0){
+    } else {
         output_file = fopen("dout.txt", "w");
         fputs(output_text, output_file);
         fclose(output_file);
     }
 
     return 0;
-}
-
-int subs_dcipher_ascii(){
-    return EXIT_SUCCESS;
 }
