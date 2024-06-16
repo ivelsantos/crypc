@@ -5,9 +5,10 @@
 int check_arguments_lenght(const int argc, const int lenght);
 
 int main(int argc, char *argv[]){
-    if(check_arguments_lenght(argc, 2)){return EXIT_FAILURE;}
+    if(check_arguments_lenght(argc, 3)){return EXIT_FAILURE;}
     char *input_file_path = argv[1];
-    if(subs_cipher_ascii(input_file_path, 10)){
+    char *mode = argv[2];
+    if(subs_cipher_ascii(input_file_path, 1, mode)){
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;

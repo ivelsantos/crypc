@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int cipher_ascii(const int character, const unsigned key_increment){
     if(character < 33 || character > 126){
@@ -10,7 +11,7 @@ int cipher_ascii(const int character, const unsigned key_increment){
     return cipher_character;
 }
 
-int subs_dcipher_ascii(const int chiper_character, const unsigned key_increment){
+int dcipher_ascii(const int chiper_character, const unsigned key_increment){
     if(chiper_character < 33 || chiper_character > 126){
         return chiper_character;
     }
@@ -19,7 +20,7 @@ int subs_dcipher_ascii(const int chiper_character, const unsigned key_increment)
     return character;
 }
 
-int subs_cipher_ascii(const char *file_path, const unsigned key){
+int subs_cipher_ascii(const char *file_path, const unsigned key, const char *mode){
     FILE * input_file = fopen(file_path, "r");
     if(input_file == NULL){
         printf("Error reading the file\n");
@@ -36,7 +37,12 @@ int subs_cipher_ascii(const char *file_path, const unsigned key){
 
     char character;
     while((character = fgetc(input_file)) != EOF){
-        char cipher_char = cipher_ascii(character, key);
+        char cipher_char;
+        if(strcmp(mode, "cipher") == 0){
+            cipher_char = cipher_ascii(character, key);
+        } else {
+            cipher_char = dcipher_ascii(character, key);
+        }
         if(offset == bufsize - 1){
             bufsize *= 2;
             char *new_buf = realloc(output_text, bufsize);
@@ -61,9 +67,20 @@ int subs_cipher_ascii(const char *file_path, const unsigned key){
         output_text = new_buf;
     }
 
-    FILE *output_file = fopen("out.txt", "w");
-    fputs(output_text, output_file);
-    fclose(output_file);
+    FILE *output_file;
+    if(strcmp(mode, "cipher") == 0){
+        output_file = fopen("out.txt", "w");
+        fputs(output_text, output_file);
+        fclose(output_file);
+    } else if(strcmp(mode, "dcipher") == 0){
+        output_file = fopen("dout.txt", "w");
+        fputs(output_text, output_file);
+        fclose(output_file);
+    }
 
     return 0;
+}
+
+int subs_dcipher_ascii(){
+    return EXIT_SUCCESS;
 }
