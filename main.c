@@ -9,11 +9,8 @@ int main(int argc, char *argv[]){
     char *input_file_path = argv[1];
     char *mode = argv[2];
     char *badchar;
-    /* char *key_char = argv[3]; */
     int key = strtol(argv[3], &badchar, 10);
 
-    /* char *badchar; */
-    /* int key = strtol(key_char, &badchar, 10); */
     if(*badchar != '\0'){
         printf("Invalid Key\n");
         return EXIT_FAILURE;
